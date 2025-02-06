@@ -1,32 +1,67 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
+    <div>
+      <Navbar />
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+      <Header />
+      <Routes>
+        <Route
+          path="/"
+          element={<CardPizza />}
+        />
+        <Route
+          path="/register"
+          element={
+            <AuthGuard requiresAuth={false}>
+              <Register />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <AuthGuard requiresAuth={false}>
+              <Login />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <AuthGuard requiresAuth={true}>
+              <Profile />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/cart"
+          element={
+            <AuthGuard requiresAuth={true}>
+              <ShoppingCart />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/pizza/:id"
+          element={<PizzaDetail />}
+        />
+        <Route
+          path="/*"
+          element={<NotFound />}
+        />
+      </Routes>
+      <Footer />
+    </div>
+  );
+};
 
 export default App
